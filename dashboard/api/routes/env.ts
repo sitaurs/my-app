@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import fs from 'fs/promises';
 import path from 'path';
+import { z } from 'zod';
 import { requireAuth } from './middleware';
 
 const router = Router();
@@ -19,11 +20,13 @@ router.get('/env', requireAuth, async (_req, res) => {
 });
 
 router.put('/env', requireAuth, async (req, res) => {
+  const schema = z.record(z.string(), z.string());
+  const body = schema.parse(req.body);
   const env = await fs.readFile(ENV_PATH, 'utf8');
   const lines = env.split('\n').map((line) => {
     const [key] = line.split('=');
-    if (allowedKeys.includes(key) && req.body[key] !== undefined) {
-      return `${key}=${req.body[key]}`;
+    if (allowedKeys.includes(key) && body[key] !== undefined) {
+      return `${key}=${body[key]}`;
     }
     return line;
   });

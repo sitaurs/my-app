@@ -2,6 +2,7 @@ import { Router } from 'express';
 import fs from 'fs/promises';
 import path from 'path';
 import bcrypt from 'bcryptjs';
+import { z } from 'zod';
 import { requireAuth } from './middleware';
 
 const router = Router();
@@ -13,7 +14,8 @@ router.get('/users', requireAuth, async (_req, res) => {
 });
 
 router.put('/users', requireAuth, async (req, res) => {
-  const { username, password } = req.body;
+  const schema = z.object({ username: z.string(), password: z.string() });
+  const { username, password } = schema.parse(req.body);
   const users: Array<{ username: string; password: string }> = JSON.parse(await fs.readFile(USERS_PATH, 'utf8'));
   const idx = users.findIndex((u) => u.username === username);
   const hashed = await bcrypt.hash(password, 10);

@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import fs from 'fs/promises';
 import path from 'path';
+import { z } from 'zod';
 import { requireAuth } from './middleware';
 
 const router = Router();
@@ -17,7 +18,9 @@ router.get('/prompts/:name', requireAuth, async (req, res) => {
 });
 
 router.put('/prompts/:name', requireAuth, async (req, res) => {
-  await fs.writeFile(path.join(PROMPTS_DIR, req.params.name), req.body.content);
+  const schema = z.object({ content: z.string() });
+  const { content } = schema.parse(req.body);
+  await fs.writeFile(path.join(PROMPTS_DIR, req.params.name), content);
   res.json({ ok: true });
 });
 

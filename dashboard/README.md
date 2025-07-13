@@ -34,3 +34,10 @@ app.use('/', express.static(require('path').join(__dirname,'dashboard','dist')))
 ```
 
 Pastikan variabel lingkungan `DASHBOARD_JWT_SECRET` diisi.
+
+## Fitur
+
+- Auth cookie JWT (2 jam)
+- Dark/light mode dengan animasi
+- Monitoring trades realtime
+- Editor prompt langsung

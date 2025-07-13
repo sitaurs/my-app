@@ -1,4 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
+import { motion } from 'framer-motion';
 
 const links = [
   { to: '/', label: 'Overview', icon: '🏠' },
@@ -14,9 +15,9 @@ function Sidebar() {
     <aside className="w-48 bg-base-200 p-4">
       <ul className="menu">
         {links.map((l) => (
-          <li key={l.to} className={pathname === l.to ? 'active' : ''}>
+          <motion.li whileHover={{ scale: 1.05 }} key={l.to} className={pathname === l.to ? 'active' : ''}>
             <Link to={l.to}>{l.icon} {l.label}</Link>
-          </li>
+          </motion.li>
         ))}
       </ul>
     </aside>
