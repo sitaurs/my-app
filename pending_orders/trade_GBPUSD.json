@@ -1,0 +1,10 @@
+{
+  "symbol": "GBPUSD",
+  "type": "ORDER_TYPE_SELL_LIMIT",
+  "price": 1.3508,
+  "sl": 1.353,
+  "tp": 1.346,
+  "volume": 0.02,
+  "comment": "BotV7 | GBPUSD",
+  "ticket": 838659601
+}
